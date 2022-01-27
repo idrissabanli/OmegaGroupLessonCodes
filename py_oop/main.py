@@ -30,7 +30,7 @@ class Employee(Human):
 class Programmer(Employee):
     pass
     
-    def __init__(self): # override, 
+    def __init__(self): # override,  
         super().__init__("IT")
 
 
