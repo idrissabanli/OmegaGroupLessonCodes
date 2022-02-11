@@ -12,7 +12,7 @@ def download_image(i):
 
 def main():
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        results = executor.map(download_image, range(100))
+        results = executor.map(download_image, range(10000))
 
         # for result in results:
         #     print(result)
