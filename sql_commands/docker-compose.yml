@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - ./mydb/:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "12345"
+      MYSQL_DATABASE: "library_books"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+# docker cp e95779478bab:/dump.sql .
+# mysqldump -u root -p library_books > dump.sql
+# 
+# mysql -u root -p library_books < dump.sql 
+
+# docker exec 40ad3759b5cc mysqldump -u root -p library_books --password=12345 > dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql
+
+# cat dump_21-02-2022_20_33_39.sql | docker exec -i cad4366cd9e6 mysql -u root -p library_books --password=12345
