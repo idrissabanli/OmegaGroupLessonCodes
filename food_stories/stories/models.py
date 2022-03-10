@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class AbsrtactModel(models.Model):
@@ -35,14 +38,21 @@ class Category(AbsrtactModel):
         return self.title
 
 
+class Tag(AbsrtactModel):
+    title = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.title
+
+
 class Story(AbsrtactModel):
     category = models.ForeignKey(Category, related_name='stories', on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    tags = models.ManyToManyField(Tag, blank=True)
 
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50, db_index=True)
     image = models.ImageField(upload_to='media/story_images/')
     cover_image = models.ImageField(upload_to='media/story_cover_images/')
     content = models.TextField()
 
-
-
-
+# story = Story.objects.create(category=category, author=user, title='story', image='image.png', cover_image='image.png', content='skjdfdsjkf')
