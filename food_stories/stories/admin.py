@@ -8,7 +8,8 @@ class StoryInlineAdmin(admin.TabularInline):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    inlines = [StoryInlineAdmin, ]
+    pass
+    # inlines = [StoryInlineAdmin, ]
 
 
 @admin.register(Story)
@@ -16,15 +17,15 @@ class StoryAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'author', 'created_at')
     list_filter = ('category__title', 'created_at', )
     search_fields = ('title', 'author__username')
-    fieldsets = [
-        ('Standard info', {
-            'fields': ('title', 'category', 'author', ),
-            'classes': ('wide',)
-        }),
-        ('Other', {
-            'fields': ('tags', )
-        }),
-    ]
+    # fieldsets = [
+    #     ('Standard info', {
+    #         'fields': ('title', 'category', 'author', ),
+    #         'classes': ('wide',)
+    #     }),
+    #     ('Other', {
+    #         'fields': ('tags', )
+    #     }),
+    # ]
 
 
 

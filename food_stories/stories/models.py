@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -27,8 +28,8 @@ class Contact(AbsrtactModel):
 
 
 class Category(AbsrtactModel):
-    title = models.CharField(max_length=30)
-    image = models.ImageField(upload_to='media/categories/')
+    title = models.CharField(max_length=30, help_text='skdfnl')
+    image = models.ImageField(upload_to='categories/')
 
     class Meta:
         verbose_name = 'Category'
@@ -51,8 +52,13 @@ class Story(AbsrtactModel):
     tags = models.ManyToManyField(Tag, blank=True)
 
     title = models.CharField(max_length=50, db_index=True)
-    image = models.ImageField(upload_to='media/story_images/')
-    cover_image = models.ImageField(upload_to='media/story_cover_images/')
+    image = models.ImageField(upload_to='story_images/')
+    cover_image = models.ImageField(upload_to='story_cover_images/')
     content = models.TextField()
+
+    def get_absolute_url(self):
+        return reverse_lazy('story_detail', kwargs={
+            'id': self.id
+        })
 
 # story = Story.objects.create(category=category, author=user, title='story', image='image.png', cover_image='image.png', content='skjdfdsjkf')
