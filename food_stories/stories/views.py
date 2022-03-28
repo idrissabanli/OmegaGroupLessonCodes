@@ -1,7 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
+from django.contrib import messages
+
 from stories.models import Story
+from stories.forms import ContactForm
 
 
 def home(request):
@@ -32,4 +36,18 @@ def story_detail(request, id):
         'story': story
     }
     return render(request, 'single.html', context)
+
+
+def contact_page(request):
+    form = ContactForm()
+    if request.method == 'POST':
+        form = ContactForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.SUCCESS, 'Mesajiniz qeyde alindi!')
+            return redirect(reverse_lazy('home'))
+    context = {
+        'form': form
+    }
+    return render(request, 'contact.html', context)
 

@@ -1,10 +1,14 @@
 from django.urls import path
-from stories.views import home, recipes, stories, story_detail
+from stories.views import (
+    home, recipes, stories, story_detail,
+    contact_page
+)
 
 
 urlpatterns = [
     path('', home, name='home'),
     path('recipes/', recipes, name='recipes_page'),
     path('stories/', stories, name='stories_page'),
+    path('contact/', contact_page, name='contact_page'),
     path('stories/<int:id>/', story_detail, name='story_detail'),
 ]
