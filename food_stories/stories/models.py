@@ -38,6 +38,10 @@ class Category(AbsrtactModel):
     def __str__(self):
         return self.title
 
+    @property
+    def story_count(self):
+        return self.stories.count()
+
 
 class Tag(AbsrtactModel):
     title = models.CharField(max_length=30)
@@ -58,7 +62,12 @@ class Story(AbsrtactModel):
 
     def get_absolute_url(self):
         return reverse_lazy('story_detail', kwargs={
-            'id': self.id
+            'pk': self.id
         })
+
+    class Meta:
+        ordering = ('-created_at', )
+
+    
 
 # story = Story.objects.create(category=category, author=user, title='story', image='image.png', cover_image='image.png', content='skjdfdsjkf')

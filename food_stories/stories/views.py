@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
+from django.views.generic import CreateView, ListView, DetailView
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 
-from stories.models import Story
+from stories.models import Story, Category
 from stories.forms import ContactForm
+from stories.models import Contact
 
 
 def home(request):
@@ -30,12 +32,46 @@ def stories(request):
     return render(request, 'stories.html', context)
 
 
+class StoryListView(ListView):
+    template_name = 'stories.html'
+    model = Story
+    # context_object_name = 'stories'
+    ordering = ('created_at', )
+    paginate_by = 2
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        category_id = self.request.GET.get('category_id') # 1
+        if category_id:
+            queryset = queryset.filter(category__id=category_id)
+        return queryset
+
+
+
 def story_detail(request, id):
     story = get_object_or_404(Story, id=id)
     context = {
         'story': story
     }
+
     return render(request, 'single.html', context)
+
+
+class StoryDetailView(DetailView):
+    model = Story
+    template_name = 'single.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all() # Category.objects.filter(stories__isnull=False).distinct()
+        return context
+        
+        # context = {
+        # 'story': story,
+        # 'category': []
+        # }
+
+
 
 
 def contact_page(request):
@@ -50,6 +86,21 @@ def contact_page(request):
         'form': form
     }
     return render(request, 'contact.html', context)
+
+
+class ContactView(CreateView):
+    template_name = 'contact.html'
+    form_class = ContactForm
+    success_url = reverse_lazy('home')
+    # model = Contact
+    # fields = '__all__'
+
+
+    def form_valid(self, form):
+        result = super().form_valid(form)
+        messages.add_message(self.request, messages.SUCCESS, 'Mesajiniz qeyde alindi!')
+        return result
+
 
 
 def like_story(request, id):
