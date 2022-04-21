@@ -1,5 +1,6 @@
 from django import forms
-from stories.models import Contact
+from django.contrib.admin.widgets import AdminFileWidget
+from stories.models import Contact, Story
 from stories.validators import validate_gmail_account
 
 class ContactForm(forms.ModelForm):
@@ -44,4 +45,47 @@ class ContactForm(forms.ModelForm):
             'subject': forms.Select(attrs={
                 'class': 'form-control',
             })
+        }
+
+
+class StoryForm(forms.ModelForm):
+    class Meta:
+        model = Story
+        fields = (
+            'title',
+            'category',
+            'image',
+            'cover_image',
+            'content',
+            'tags',
+        )
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'placeholder': 'Title',
+                'class': 'form-control'
+            }),
+            'category': forms.Select(attrs={
+                'placeholder': 'Category',
+                'class': 'form-control'
+            }),
+            'image': AdminFileWidget(attrs={
+                'placeholder': 'Image',
+                'class': 'form-control'
+            }),
+            'cover_image': AdminFileWidget(attrs={
+                'placeholder': 'Cover image',
+                'class': 'form-control'
+            }),
+            'content': forms.Textarea(attrs={
+                'placeholder': 'Content',
+                'class': 'form-control'
+            }),
+            'tags': forms.SelectMultiple(attrs={
+                'placeholder': 'tags',
+                'class': 'form-control'
+            }),
+            # 'author': forms.Select(attrs={
+            #     'placeholder': 'Author',
+            #     'class': 'form-control'
+            # }),
         }

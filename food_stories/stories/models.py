@@ -52,7 +52,7 @@ class Tag(AbsrtactModel):
 
 class Story(AbsrtactModel):
     category = models.ForeignKey(Category, related_name='stories', on_delete=models.CASCADE)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, related_name='stories', on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag, blank=True)
 
     title = models.CharField(max_length=50, db_index=True)

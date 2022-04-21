@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import CreateView, ListView, DetailView, UpdateView
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 
 from stories.models import Story, Category
-from stories.forms import ContactForm
+from stories.forms import ContactForm, StoryForm
 from stories.models import Contact
 
 
@@ -126,3 +127,17 @@ def liked_stories(request):
     return render(request, 'liked_stories.html', context)
 
 
+class CreateStoryView(LoginRequiredMixin, CreateView):
+    form_class = StoryForm
+    template_name = 'create_story.html'
+    # success_url = '/'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class UpdateStoryView(LoginRequiredMixin, UpdateView):
+    form_class = StoryForm
+    model = Story
+    template_name = 'create_story.html'
