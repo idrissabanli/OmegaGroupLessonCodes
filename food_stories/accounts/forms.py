@@ -1,9 +1,29 @@
 from django import forms
 from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 
 USER = get_user_model()
+
+class CustomSetPasswordForm(SetPasswordForm):
+    new_password1 = forms.CharField(
+                                    widget=forms.PasswordInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'New Password'
+            }))
+    new_password2 = forms.CharField(
+                                    widget=forms.PasswordInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Confirm New Password'
+            }))
+
+
+class ResetPasswordForm(PasswordResetForm):
+    email = forms.EmailField(label=_("Email"), widget=forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Email'
+            }), max_length=254)
+
 
 
 class RegisterForm(forms.ModelForm):
