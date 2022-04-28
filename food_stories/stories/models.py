@@ -56,17 +56,22 @@ class Story(AbsrtactModel):
     tags = models.ManyToManyField(Tag, blank=True)
 
     title = models.CharField(max_length=50, db_index=True)
+    slug = models.SlugField(max_length=70, editable=False, db_index=True) 
     image = models.ImageField(upload_to='story_images/')
     cover_image = models.ImageField(upload_to='story_cover_images/')
     content = models.TextField()
 
     def get_absolute_url(self):
         return reverse_lazy('story_detail', kwargs={
-            'pk': self.id
+            'slug': self.slug
         })
 
     class Meta:
         ordering = ('-created_at', )
+
+    def __str__(self):
+        return self.title
+
 
     
 

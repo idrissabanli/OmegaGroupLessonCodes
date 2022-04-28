@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-+gz*$^e0h6d!2sw%80vj6#a5g27syo#^%ms=qy0jh!&1iu*op$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'accounts.User'
 
@@ -57,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'food_stories.middleware.BlockIPMiddleware'
 ]
 
 ROOT_URLCONF = 'food_stories.urls'
