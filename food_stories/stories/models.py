@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
 from django.contrib.auth import get_user_model
 
@@ -15,8 +16,8 @@ class AbsrtactModel(models.Model):
 
 class Contact(AbsrtactModel):
     SUBJECT_CHOICES = (
-        (1, 'Sayt islemir'),
-        (2, 'Menimle elaqe saxlayin'),
+        (1, _('Sayt islemir')),
+        (2, _('Menimle elaqe saxlayin')),
     )
     name = models.CharField('Ad', max_length=50)
     email = models.EmailField('E Poct', max_length=40)
@@ -32,8 +33,8 @@ class Category(AbsrtactModel):
     image = models.ImageField(upload_to='categories/')
 
     class Meta:
-        verbose_name = 'Category'
-        verbose_name_plural = 'Categories'
+        verbose_name = _('Category')
+        verbose_name_plural = _('Categories')
 
     def __str__(self):
         return self.title

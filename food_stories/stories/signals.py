@@ -15,7 +15,7 @@ def story_object_creation(sender, instance, created, **kwargs):
     print(created)
     old_slug = instance.slug
     new_slug = f"{slugify(instance.title)}-{instance.id}"
-    if old_slug != new_slug:
+    if  created and old_slug != new_slug:
         instance.slug = new_slug
         instance.save()
         print('isledi')

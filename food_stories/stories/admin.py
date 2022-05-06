@@ -1,4 +1,5 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin
 
 from stories.models import Contact, Category, Story, Tag
 
@@ -13,7 +14,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Story)
-class StoryAdmin(admin.ModelAdmin):
+class StoryAdmin(TranslationAdmin):
     list_display = ('title', 'category', 'author', 'created_at')
     list_filter = ('category__title', 'created_at', )
     search_fields = ('title', 'author__username')
@@ -30,3 +31,4 @@ class StoryAdmin(admin.ModelAdmin):
 
 
 admin.site.register([Contact, Tag])
+# admin.site.register(Story, StoryAdmin)
