@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'social_django',
-    
+    'rest_framework',
 
     'stories',
     'accounts',
@@ -67,6 +67,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'food_stories.urls'
+
+# REST_FRAMEWORK = {
+#     'DATETIME_FORMAT': "%m/%d/%Y %H:%M:%S",
+# }
 
 TEMPLATES = [
     {
