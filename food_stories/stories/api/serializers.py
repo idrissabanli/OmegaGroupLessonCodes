@@ -48,6 +48,7 @@ class StoryReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Story
         fields = (
+            'id',
             'category',
             'author',
             'tags',
