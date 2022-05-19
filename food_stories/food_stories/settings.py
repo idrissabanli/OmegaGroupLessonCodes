@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
 from pathlib import Path
+from datetime import timedelta
 from django.utils.translation import gettext_lazy as _
 
 
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
 
     'social_django',
     'rest_framework',
+    'rest_framework_simplejwt',
 
     'stories',
     'accounts',
@@ -66,7 +68,23 @@ MIDDLEWARE = [
     
 ]
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
+    "TOKEN_OBTAIN_SERIALIZER": "accounts.api.serializers.CustomTokenObtainPairSerializer",
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+
+    'JTI_CLAIM': 'jti',
+}
+
 ROOT_URLCONF = 'food_stories.urls'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
 
 # REST_FRAMEWORK = {
 #     'DATETIME_FORMAT': "%m/%d/%Y %H:%M:%S",
