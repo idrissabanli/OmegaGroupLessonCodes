@@ -1,7 +1,7 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 
-from stories.models import Contact, Category, Story, Tag
+from stories.models import Contact, Category, Story, Tag, Subscriber
 
 class StoryInlineAdmin(admin.TabularInline):
     model = Story
@@ -30,5 +30,5 @@ class StoryAdmin(TranslationAdmin):
 
 
 
-admin.site.register([Contact, Tag])
+admin.site.register([Contact, Tag, Subscriber])
 # admin.site.register(Story, StoryAdmin)

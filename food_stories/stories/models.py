@@ -14,6 +14,12 @@ class AbsrtactModel(models.Model):
         abstract = True
 
 
+class Subscriber(AbsrtactModel):
+    email = models.EmailField(_("Email"), unique=True, max_length=50)
+    is_active = models.BooleanField('Is Active', default=True)
+
+
+
 class Contact(AbsrtactModel):
     SUBJECT_CHOICES = (
         (1, _('Sayt islemir')),

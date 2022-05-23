@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'social_django',
     'rest_framework',
     'rest_framework_simplejwt',
+    "corsheaders",
 
     'stories',
     'accounts',
@@ -59,6 +60,7 @@ MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -67,6 +69,8 @@ MIDDLEWARE = [
     'food_stories.middleware.BlockIPMiddleware'
     
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
@@ -83,12 +87,10 @@ ROOT_URLCONF = 'food_stories.urls'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DATETIME_FORMAT': "%m/%d/%Y %H:%M:%S",
 }
 
-# REST_FRAMEWORK = {
-#     'DATETIME_FORMAT': "%m/%d/%Y %H:%M:%S",
-# }
 
 TEMPLATES = [
     {

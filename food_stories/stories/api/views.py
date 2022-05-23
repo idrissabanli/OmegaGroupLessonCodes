@@ -11,8 +11,8 @@ from rest_framework.status import (
 )
 
 from django.http import Http404
-from stories.api.serializers import StoryReadSerializer, StoryCreateSerializer
-from stories.models import Story
+from stories.api.serializers import StoryReadSerializer, StoryCreateSerializer, SubscriberSerializer
+from stories.models import Story, Subscriber
 
 class CustomListCreateAPIView(ListCreateAPIView):
 
@@ -34,3 +34,8 @@ class StoryListCreateAPI(CustomListCreateAPIView):
 class StoryRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Story.objects.all()
     serializer_class = StoryCreateSerializer
+
+
+class SubscribersView(CreateAPIView):
+    queryset = Subscriber.objects.all()
+    serializer_class = SubscriberSerializer
