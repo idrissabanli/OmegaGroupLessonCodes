@@ -9,6 +9,7 @@ from django.contrib import messages
 from stories.models import Story, Category
 from stories.forms import ContactForm, StoryForm
 from stories.models import Contact
+from stories.tasks import process_func
 
 
 def home(request):
@@ -73,6 +74,9 @@ class StoryDetailView(DetailView):
         # }
 
 
+def export(request):
+    process_func.delay()
+    return redirect('/')
 
 
 def contact_page(request):

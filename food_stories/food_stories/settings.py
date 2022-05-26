@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     "corsheaders",
+    'django_celery_beat',
 
     'stories',
     'accounts',
@@ -91,6 +92,9 @@ REST_FRAMEWORK = {
     'DATETIME_FORMAT': "%m/%d/%Y %H:%M:%S",
 }
 
+# 1. background process
+# 2. paralel
+# 3. periodic tasks
 
 TEMPLATES = [
     {
@@ -135,6 +139,14 @@ DATABASES = {
         'HOST': 'localhost',
     }
 }
+
+# CELERY STUFF
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Baku'
 
 
 # Password validation

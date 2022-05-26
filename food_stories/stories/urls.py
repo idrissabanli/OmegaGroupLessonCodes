@@ -1,6 +1,8 @@
 from django.urls import path
 from stories.views import (
-    home, recipes, stories, StoryDetailView,
+    home, recipes,
+    export,
+    stories, StoryDetailView,
     ContactView,
     CreateStoryView,
     UpdateStoryView,
@@ -20,4 +22,5 @@ urlpatterns = [
     path('liked-stories/', liked_stories, name='liked_stories'),
     path('like/<int:id>/', like_story, name='like_story'),
     path('stories/<slug:slug>/', StoryDetailView.as_view(), name='story_detail'),
+    path('export/', export, name='export'),
 ]
