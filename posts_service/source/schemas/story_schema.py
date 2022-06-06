@@ -25,6 +25,7 @@ class TagSchema(ma.SQLAlchemyAutoSchema):
 class StorySchema(ma.SQLAlchemyAutoSchema):
     category = fields.Nested(CategorySchema, )
     tags = fields.Nested(TagSchema, many=True)
+    slug = fields.String(dump_only=True)
 
     class Meta:
         model = Story

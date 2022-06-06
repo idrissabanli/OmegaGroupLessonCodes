@@ -6,7 +6,7 @@ from flask_marshmallow import Marshmallow
 
 from app import app
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:12345@localhost:5432/posts'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://user:12345@localhost:5433/auth'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '12345' 
 

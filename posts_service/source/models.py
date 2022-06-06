@@ -1,5 +1,6 @@
 from config.extentions import db
 from flask_login import UserMixin
+from slugify import slugify
 
 
 
@@ -54,6 +55,12 @@ class Story(SaveMixin):
     author = db.relationship("User", backref='stories')
     image = db.Column(db.String(255), nullable=False)
     content = db.Column(db.Text, nullable=False)
+
+
+    def save(self):
+        self.slug = slugify(self.title)
+        return super().save()
+        
 
 
 
