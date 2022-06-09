@@ -1,4 +1,5 @@
 from config.extentions import db
+from werkzeug.security import generate_password_hash
 from flask_login import UserMixin
 from slugify import slugify
 
@@ -29,4 +30,8 @@ class User(SaveMixin, UserMixin):
     password = db.Column(db.String(255), nullable=False)
     image = db.Column(db.String(255), nullable=True)
     bio = db.Column(db.Text, nullable=True)
+
+    def save(self):
+        self.password = generate_password_hash(self.password)
+        return super().save()
 
