@@ -1,7 +1,9 @@
 import os
+from itsdangerous import URLSafeTimedSerializer
 from datetime import datetime
 from config.extentions import MEDIA_ROOT
 from werkzeug.utils import secure_filename
+from app import app
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
@@ -20,3 +22,21 @@ def save_file(file):
         return filename
     else:
         return False
+
+
+def generate_confirmation_token(email):
+    serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+    return serializer.dumps(email, salt=app.config['SECURITY_PASSWORD_SALT'])
+
+
+def confirm_token(token, expiration=3600):
+    serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
+    try:
+        email = serializer.loads(
+            token,
+            salt=app.config['SECURITY_PASSWORD_SALT'],
+            max_age=expiration
+        )
+    except:
+        return False
+    return email

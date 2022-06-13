@@ -12,6 +12,7 @@ from models import User
 from schemas.user_schema import (
     UserSchema
 )
+from utils import confirm_token
 
 @app.route("/api/auth/register/", methods=['POST'])
 def register():
@@ -22,11 +23,13 @@ def register():
     data = dict(request.form or request.json)
     data['image'] = image_path
     try:
-        schema = UserSchema().load(data)
-        schema.save()
+        user = UserSchema().load(data)
+        user.save()
+        # user.send_confirmation_mail()
+        user.send_data_post_service()
     except ValidationError as err:
         return err.messages, 400
-    return UserSchema().jsonify(schema), 201
+    return UserSchema().jsonify(user), 201
 
 
 @app.route("/api/auth/login", methods=["POST"])
@@ -42,7 +45,20 @@ def login():
     return jsonify({"msg": "Bad username or password"}), 401
 
 
+@app.route('/confirm_email/<token>/')
+def confirm_email(token):
+    email = confirm_token(token)
+    if not email:
+        return jsonify(mesaage='The confirmation link is invalid or has expired.'), 200
+    user = User.query.filter_by(email=email).first_or_404()
+    if user.is_active:
+        return jsonify(mesaage='Account already confirmed. Please login.'), 200
+    user.is_active = True
+    user.save()
+    # user.send_data_post_service() normalda burda olmalidir!
+    return jsonify(mesaage='You have confirmed your account. Thanks!'), 200
     
+
 @app.route("/api/auth/profile", methods=["GET"])
 @jwt_required()
 def user_profile():

@@ -12,3 +12,10 @@ services:
           POSTGRES_PASSWORD: 12345
           POSTGRES_USER: user
           POSTGRES_DB: auth
+
+    adminer:
+      image: adminer
+      restart: always
+      ports:
+          - 8081:8080
+

@@ -26,7 +26,6 @@ class User(SaveMixin, UserMixin):
     last_name = db.Column(db.String(50), nullable=False)
     username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
-    password = db.Column(db.String(255), nullable=False)
     image = db.Column(db.String(255), nullable=True)
     bio = db.Column(db.Text, nullable=True)
 
@@ -48,11 +47,11 @@ class Tag(SaveMixin):
 class Story(SaveMixin):
     title = db.Column(db.String(200), nullable=False)
     slug = db.Column(db.String(255), nullable=False)
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
     category = db.relationship("Category", backref='stories')
     tags = db.relationship("Tag", secondary=stories_tags, back_populates="stories")
-    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    author = db.relationship("User", backref='stories')
+    author_id = db.Column(db.Integer, nullable=False)
+    # author = db.relationship("User", backref='stories')
     image = db.Column(db.String(255), nullable=False)
     content = db.Column(db.Text, nullable=False)
 

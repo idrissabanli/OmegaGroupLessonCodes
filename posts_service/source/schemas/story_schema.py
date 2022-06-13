@@ -1,6 +1,15 @@
 from marshmallow import fields
 from config.extentions import ma
-from models import Story, Category, Tag
+from models import Story, Category, Tag, User
+
+
+class UserSchema(ma.SQLAlchemyAutoSchema):
+    email = fields.Email(required=True)
+
+    class Meta:
+        model = User
+        load_instance = True
+        include_fk = True
 
 
 class CategorySchema(ma.SQLAlchemyAutoSchema):

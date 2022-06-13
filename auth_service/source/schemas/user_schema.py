@@ -14,6 +14,7 @@ class UserSchema(ma.SQLAlchemyAutoSchema):
         model = User
         load_instance = True
         include_fk = True
+        exclude = ('is_active', )
 
     @validates_schema
     def validate_confirm_password(self, data, **kwargs):
