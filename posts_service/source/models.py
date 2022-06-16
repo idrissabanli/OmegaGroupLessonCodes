@@ -1,8 +1,12 @@
-from config.extentions import db
+from config.extentions import db, login_manager
 from flask_login import UserMixin
 from slugify import slugify
 
 
+
+@login_manager.user_loader
+def load_user(user):
+    return User.get(user)
 
 class SaveMixin(db.Model):
     __abstract__ = True

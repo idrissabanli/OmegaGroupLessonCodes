@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager
+from flasgger import Swagger
 
 from app import app
 
@@ -14,6 +15,7 @@ app.config['SECRET_KEY'] = '12345'
 app.config["JWT_SECRET_KEY"] = "s12345"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = datetime.timedelta(minutes=5)
 
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -21,6 +23,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 ma = Marshmallow(app)
+swagger = Swagger(app)
 
 login_manager = LoginManager(app)
 
