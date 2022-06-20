@@ -97,8 +97,15 @@ class ContactView(CreateView):
     template_name = 'contact.html'
     form_class = ContactForm
     success_url = reverse_lazy('home')
+    # context_object_name = 
     # model = Contact
     # fields = '__all__'
+
+
+    # def get_context_data(self, *args, **kwargs):
+    #     context = super().get_context_data(*args, **kwargs)
+    #     del context['form']
+    #     return context
 
 
     def form_valid(self, form):
