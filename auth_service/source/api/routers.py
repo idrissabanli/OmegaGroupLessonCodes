@@ -27,6 +27,7 @@ def register():
         user.save()
         # user.send_confirmation_mail()
         user.send_data_post_service()
+        
     except ValidationError as err:
         return err.messages, 400
     return UserSchema().jsonify(user), 201
